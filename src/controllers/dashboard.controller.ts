@@ -8,7 +8,6 @@ export class DashboardController {
 
   @Get()
   dashboard(@Req() req: Request, @Res() res: Response) {
-    console.log(req['loggedInUser']);
     res.render('dashboard', {
       test: req['loggedInUser']['id'],
     });

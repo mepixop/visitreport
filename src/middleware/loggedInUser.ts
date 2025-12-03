@@ -6,7 +6,7 @@ import { User } from 'src/domain/user';
 export class LoggedInUserOnly implements NestMiddleware {
   use(req: any, @Res() res: Response, next: (error?: any) => void) {
     if (this.isValidUser(req.cookies['loggedInUser'])) {
-      req.loggedInUser = this.getLoggedInUserId(req.cookies['loggedInUser']);
+      req.loggedInUser = this.getLoggedInUser(req.cookies['loggedInUser']);
       next();
     } else {
       res.status(302).redirect('/login');
@@ -25,7 +25,7 @@ export class LoggedInUserOnly implements NestMiddleware {
     return true;
   }
 
-  getLoggedInUserId(cookie: string): User {
+  getLoggedInUser(cookie: string): User {
     const segments = cookie.split(';');
     const user = new User(
       parseInt(segments[0].split('=')[1]),

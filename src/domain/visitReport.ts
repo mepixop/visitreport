@@ -1,5 +1,6 @@
 import { Contact } from './contact';
 import { Status, VisitReportType, VisitReportOutcome } from './enums';
+import { Task } from './task';
 import { User } from './user';
 
 export class VisitReport {
@@ -15,4 +16,5 @@ export class VisitReport {
   private attendees: [Contact];
   private notes: string;
   private followUp: string;
+  private tasks: [Task];
 }

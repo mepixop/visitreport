@@ -6,5 +6,6 @@ export class Task {
   private description: string;
   private status: Status;
   private assignedTo: User;
+  private completeBy: Date;
   private visitReportId: number;
 }
