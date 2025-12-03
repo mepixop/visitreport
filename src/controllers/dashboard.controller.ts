@@ -9,7 +9,7 @@ export class DashboardController {
   @Get()
   dashboard(@Req() req: Request, @Res() res: Response) {
     res.render('dashboard', {
-      test: this.configService.get<string>('DATABASE_USER'),
+      test: req['loggedInUser'],
     });
   }
 }
