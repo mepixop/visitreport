@@ -42,4 +42,3 @@ create table if not exists task(
     foreign key (assignedTo) references user(id),
     foreign key (visitReportId) references visitReport(id)
 );
-

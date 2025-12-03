@@ -1,10 +1,14 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res } from '@nestjs/common';
+import type { Request, Response } from 'express';
 
 @Controller('/visit-report')
 export class VisitReportController {
   @Get()
-  visitReportDashboard() {
-    return 'This page is an overview of all your visit reports';
+  visitReportDashboard(@Req() req: Request, @Res() res: Response) {
+    const user = req['loggedInUser'];
+    res.render('visitReport', {
+      user: user,
+    });
   }
 
   @Get('/form')
