@@ -1,5 +1,4 @@
 import mysql from 'mysql2/promise';
-import { Status } from 'src/domain/enums';
 import { Task } from 'src/domain/task';
 import { User } from 'src/domain/user';
 
@@ -9,18 +8,18 @@ export class TaskModel {
   async getActiveTasksForUser(user: User) {
     const [results, _] = await this.dbConnector.query(
       'select * from task where assignedTo = ? and status != ?',
-      [user.id, Status.CLOSED],
+      [user.id, 'Closed'],
     );
 
-    return Object.values(results).map((item) => this.toDomain(item));
+    return Object.values(results).map((item) => this.toDomain(item, user));
   }
 
-  toDomain(item): Task {
+  toDomain(item: Object, user: User): Task {
     return new Task(
       parseInt(item['id']),
       item['description'],
       item['status'],
-      item['assignedTo'],
+      user,
       new Date(item['completeBy']),
       item['visitReportId'],
     );

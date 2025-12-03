@@ -1,6 +1,8 @@
 export class Contact {
-  private id: number;
-  private name: string;
-  private isPrimary: boolean;
-  private visitReportId: number;
+  constructor(
+    public id: number,
+    public name: string,
+    public isPrimary: boolean,
+    public visitReportId: number,
+  ) {}
 }
