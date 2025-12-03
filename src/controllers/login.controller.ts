@@ -1,45 +1,42 @@
-import { Controller, Get, Post, Redirect, Req, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Redirect,
+  Render,
+  Req,
+  Res,
+} from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import type { Request, Response } from 'express';
 import { getDbConnector } from 'src/models/dbConnector';
 import { UserModel } from 'src/models/user';
 
-class Cat {
-  name: string;
-  age: number;
-  color: string;
-
-  constructor(n: string, a: number, c: string) {
-    this.name = n;
-    this.age = a;
-    this.color = c;
-  }
-}
-
 @Controller('login')
 export class LoginController {
+  constructor(private configService: ConfigService) {}
+
   @Get()
-  loginPage(@Req() request: Request) {
-    console.log(request.cookies);
-    const cats = [new Cat('Lulu', 12, 'Brown'), new Cat('Jackie', 11, 'Black')];
-    return cats;
+  loginPage(@Req() req: Request, @Res() res: Response) {
+    res.render('login', {});
   }
 
   @Post()
-  async doLogin(@Req() request: Request, @Res() response: Response) {
-    const userModel = new UserModel(await getDbConnector());
+  async doLogin(@Req() req: Request, @Res() res: Response) {
+    const userModel = new UserModel(await getDbConnector(this.configService));
     try {
       const loggedInUser = await userModel.getByLoginCredentials(
-        request.body!['username'],
-        request.body!['password'],
+        req.body!['username'],
+        req.body!['password'],
       );
-      response.cookie(
+      res.cookie(
         'loggedInUser',
         `id=${loggedInUser.id};username=${loggedInUser.username};password=${loggedInUser.password}`,
       );
-      response.redirect('/dashboard');
+      res.redirect('/dashboard');
     } catch (e) {
-      response.cookie('loggedInUser', '', { maxAge: 1 });
-      response.status(401).send('Unauthorized');
+      res.cookie('loggedInUser', '', { maxAge: 1 });
+      res.status(401).send('Unauthorized');
     }
   }
 }

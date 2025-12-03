@@ -6,9 +6,14 @@ import { DashboardController } from './controllers/dashboard.controller';
 import { VisitReportController } from './controllers/visitReport.controller';
 import { LoggedInUserOnly } from './middleware/loggedInUser';
 import { LogoutController } from './controllers/logout.controller';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+  ],
   controllers: [
     AppController,
     LoginController,
