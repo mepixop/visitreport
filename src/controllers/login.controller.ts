@@ -10,7 +10,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import type { Request, Response } from 'express';
 import { getDbConnector } from 'src/models/dbConnector';
-import { UserModel } from 'src/models/user';
+import { UserModel } from 'src/models/userModel';
 
 @Controller('login')
 export class LoginController {
