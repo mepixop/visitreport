@@ -1,7 +1,58 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <p>This is the dashboard page served via hbs for userId {{test}}.</p>
+        <p>This is the dashboard page for {{user.username}}.</p>
         <p><a href="/logout">Logout</a></p>
+        <p>
+            <h3>Today's Tasks</h3>
+            <table title="Today's Tasks" border="2px">
+                <tr>
+                    <th>Due Date</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                </tr>
+                {{#each tasks.today}}
+                <tr>
+                    <td>{{completeBy}}</td>
+                    <td>{{description}}</td>
+                    <td>{{status}}</td>
+                </tr>
+                {{/each}}
+            </table>
+        </p>
+        <p>
+            <h3>This week's Tasks</h3>
+            <table title="This week's Tasks" border="2px">
+                <tr>
+                    <th>Due Date</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                </tr>
+                {{#each tasks.thisWeek}}
+                <tr>
+                    <td>{{completeBy}}</td>
+                    <td>{{description}}</td>
+                    <td>{{status}}</td>
+                </tr>
+                {{/each}}
+            </table>
+        </p>
+        <p>
+            <h3>Future Tasks</h3>
+            <table title="Future Tasks" border="2px">
+                <tr>
+                    <th>Due Date</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                </tr>
+                {{#each tasks.remaining}}
+                <tr>
+                    <td>{{completeBy}}</td>
+                    <td>{{description}}</td>
+                    <td>{{status}}</td>
+                </tr>
+                {{/each}}
+            </table>
+        </p>
     </body>
 </html>

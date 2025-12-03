@@ -7,6 +7,8 @@ import { VisitReportController } from './controllers/visitReport.controller';
 import { LoggedInUserOnly } from './middleware/loggedInUser';
 import { LogoutController } from './controllers/logout.controller';
 import { ConfigModule } from '@nestjs/config';
+import { TaskService } from './services/taskService';
+import { UtilityService } from './services/utilityService';
 
 @Module({
   imports: [
@@ -21,7 +23,7 @@ import { ConfigModule } from '@nestjs/config';
     VisitReportController,
     LogoutController,
   ],
-  providers: [AppService],
+  providers: [AppService, TaskService, UtilityService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

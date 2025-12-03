@@ -2,11 +2,7 @@ import mysql from 'mysql2/promise';
 import { User } from 'src/domain/user';
 
 export class UserModel {
-  dbConnector: mysql.Connection;
-
-  constructor(connector: mysql.Connection) {
-    this.dbConnector = connector;
-  }
+  constructor(private dbConnector: mysql.Connection) {}
 
   async getById(id: number) {
     const [result, _] = await this.dbConnector.query(

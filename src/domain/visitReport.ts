@@ -13,8 +13,8 @@ export class VisitReport {
   private endTime: Date;
   private outcome: VisitReportOutcome;
   private primaryContact: Contact;
-  private attendees: [Contact];
+  private attendees: Contact[];
   private notes: string;
   private followUp: string;
-  private tasks: [Task];
+  private tasks: Task[];
 }

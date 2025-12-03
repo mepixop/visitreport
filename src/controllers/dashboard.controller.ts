@@ -1,15 +1,25 @@
 import { Controller, Get, Req, Res } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { Response } from 'express';
+import { User } from 'src/domain/user';
+import { getDbConnector } from 'src/models/dbConnector';
+import { TaskModel } from 'src/models/taskModel';
+import { TaskService } from 'src/services/taskService';
 
 @Controller('dashboard')
 export class DashboardController {
-  constructor(private configService: ConfigService) {}
+  constructor(
+    private configService: ConfigService,
+    private taskService: TaskService,
+  ) {}
 
   @Get()
-  dashboard(@Req() req: Request, @Res() res: Response) {
+  async dashboard(@Req() req: Request, @Res() res: Response) {
+    const user = req['loggedInUser'] as User;
+    const tasks = await this.taskService.getTasksForDashboard(user);
     res.render('dashboard', {
-      test: req['loggedInUser']['id'],
+      tasks: tasks,
+      user: user,
     });
   }
 }
