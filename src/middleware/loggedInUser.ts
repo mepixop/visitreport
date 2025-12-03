@@ -1,5 +1,6 @@
 import { Injectable, NestMiddleware, Res } from '@nestjs/common';
 import type { Response } from 'express';
+import { User } from 'src/domain/user';
 
 @Injectable()
 export class LoggedInUserOnly implements NestMiddleware {
@@ -24,7 +25,13 @@ export class LoggedInUserOnly implements NestMiddleware {
     return true;
   }
 
-  getLoggedInUserId(cookie: string): number {
-    return parseInt(cookie.split(';')[0].split('=')[1]);
+  getLoggedInUserId(cookie: string): User {
+    const segments = cookie.split(';');
+    const user = new User(
+      parseInt(segments[0].split('=')[1]),
+      segments[1].split('=')[1],
+      segments[2].split('=')[1],
+    );
+    return user;
   }
 }
