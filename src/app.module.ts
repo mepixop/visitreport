@@ -14,13 +14,14 @@ import { LogoutController } from './controllers/logout.controller';
     LoginController,
     DashboardController,
     VisitReportController,
-    LogoutController
+    LogoutController,
   ],
   providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LoggedInUserOnly)
-      .forRoutes(DashboardController, VisitReportController)
+    consumer
+      .apply(LoggedInUserOnly)
+      .forRoutes(DashboardController, VisitReportController);
   }
 }

@@ -1,11 +1,9 @@
-import { Controller, Get, Req } from "@nestjs/common";
+import { Controller, Get, Req } from '@nestjs/common';
 
-@Controller("dashboard")
+@Controller('dashboard')
 export class DashboardController {
-    @Get()
-    dashboard(
-        @Req() req: Request
-    ) {
-        return "This is the dashboard page for user " + req['loggedInUser'];
-    }
+  @Get()
+  dashboard(@Req() req: Request) {
+    return 'This is the dashboard page for user ' + req['loggedInUser'];
+  }
 }
