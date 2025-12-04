@@ -6,6 +6,8 @@ import { User } from 'src/domain/user';
 export class TaskModel {
   constructor(private dbConnector: mysql.Connection) {}
 
+  private ONE_DAY = 24 * 60 * 60 * 1000;
+
   async getActiveTasksForUser(user: User) {
     const [results, _] = await this.dbConnector.query(
       'select * from task where assignedTo = ? and status != ?',
@@ -20,6 +22,30 @@ export class TaskModel {
       [id],
     );
     return Object.values(results).map((item) => this.toDomain(item, user));
+  }
+
+  async saveTaskStrings(tasks: string[], user: User, reportId: number) {
+    const insertQuery =
+      'insert into task(description,status,assignedTo,completeBy,visitReportId) values (?,?,?,?,?)';
+    for (const task of tasks) {
+      await this.dbConnector.query(insertQuery, [
+        task,
+        Status.Open,
+        user.id,
+        this.getNextWeekMorning(),
+        reportId,
+      ]);
+    }
+  }
+
+  getNextWeekMorning(): Date {
+    const nextWeek = new Date(new Date().getTime() + 7 * this.ONE_DAY);
+    const nextWeekMorning = new Date(
+      nextWeek.getFullYear(),
+      nextWeek.getMonth(),
+      nextWeek.getDate(),
+    );
+    return nextWeekMorning;
   }
 
   toDomain(item: Object, user: User): Task {

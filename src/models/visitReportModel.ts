@@ -21,4 +21,24 @@ export class VisitReportModel {
     );
     return Object.values(results)[0];
   }
+
+  async saveVisitReport(report: VisitReport) {
+    const [result, _] = await this.dbConnector.query(
+      'insert into visitReport' +
+        '(status, assignedTo, topic, type, startTime, endTime, outcome, notes, followUp)' +
+        ' values (?,?,?,?,?,?,?,?,?)',
+      [
+        report.status,
+        report.assignedTo.id,
+        report.topic,
+        report.type,
+        report.startTime,
+        report.endTime,
+        report.outcome,
+        report.notes,
+        report.followUp,
+      ],
+    );
+    return result['insertId'];
+  }
 }

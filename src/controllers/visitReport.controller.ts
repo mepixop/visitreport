@@ -25,5 +25,24 @@ export class VisitReportController {
     });
   }
   @Post('/form')
-  submitForm() {}
+  async submitForm(@Req() req: Request, @Res() res: Response) {
+    console.log(req.body);
+    const user = req['loggedInUser'];
+    const errors = await this.visitReportService.createVisitReport(
+      req.body,
+      user,
+    );
+    if (errors.length > 0)
+      res.status(200).send({
+        error: true,
+        errors: errors,
+        redirectUrl: '',
+      });
+    else
+      res.status(200).send({
+        error: false,
+        errors: [],
+        redirectUrl: '/visit-report',
+      });
+  }
 }
