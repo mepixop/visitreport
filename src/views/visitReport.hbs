@@ -16,5 +16,46 @@
           </ul>
         </p>
         <hr />
+        <p>
+          <h3>Visit Reports</h3>
+          <table border="2px">
+            <tr>
+              <th>id</th>
+              <th>Topic</th>
+              <th>Status</th>
+              <th>Type</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>outcome</th>
+              <th>primaryContact</th>
+              <th>notes</th>
+              <th>tasks</th>
+              <th>attendees</th>
+            </tr>
+            {{#each reports}}
+            <tr>
+              <td>{{id}}</td>
+              <td>{{topic}}</td>
+              <td>{{status}}</td>
+              <td>{{type}}</td>
+              <td>{{startTime}}</td>
+              <td>{{endTime}}</td>
+              <td>{{outcome}}</td>
+              <td>{{primaryContact.name}}</td>
+              <td>{{notes}}</td>
+              <td>
+              {{#each tasks}}
+                <div>{{description}}</div>
+              {{/each}}
+             </td>   
+             <td>
+              {{#each attendees}}
+                <div>{{name}}</div>
+              {{/each}}
+             </td>   
+            </tr>
+            {{/each}}
+          </table>
+        </p>
   </body>
 </html>

@@ -9,7 +9,7 @@ export class UserModel {
       'select * from user where `id` = ?',
       [id],
     );
-    return this.userFromData(result[0]);
+    return this.toDomain(result[0]);
   }
 
   async getByLoginCredentials(username: string, password: string) {
@@ -18,10 +18,10 @@ export class UserModel {
       [username, password],
     );
 
-    return this.userFromData(result[0]);
+    return this.toDomain(result[0]);
   }
 
-  userFromData(data): User {
+  toDomain(data): User {
     return new User(data['id'], data['username'], data['password']);
   }
 }

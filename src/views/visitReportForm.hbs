@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visit Report Form</title>
+  </head>
+  <body>
+    <p>This is the Visit Reports page for {{user.username}}.</p>
+      <p><a href="/logout">Logout</a></p>
+      <hr />
+      <p>
+        <ul>
+          <li><a href="/dashboard">Dashboard</a></li>
+        </ul>
+      </p>
+      <hr /> 
+      <p>
+        <a href="/visit-report">Back</a>
+      </p>
+      
+    <h3>Visit Report</h3>
+    <form id="" method="post">
+      <label for="topic"> Topic</label>
+      <input type="text" id="topic" name="topic">    
+      
+      <label for = "type"> Status</label>
+      <select id="type" name ="type">
+        <option value="VideoCall">Open</option>
+        <option value="ExternalVisit">Open</option>
+        <option value="InternalVisit">Open</option>
+        <option value="Expo">Open</option>
+      </select>
+
+      <label for="startTime">Start Time:</label>
+      <input type="datetime" id="startTime" name="startTime">
+      <label for="startTime">Start Time:</label>
+      <input type="datetime" id="startTime" name="startTime">
+
+      <label for = "outcome"> Outcome</label>
+      <select id="type" name ="type">
+        <option value="Negative">Negative</option>
+        <option value="Normal">Normal</option>
+        <option value="Positive">Positive</option>
+        <option value="VeryPositive">Very Positive</option>
+      </select>
+
+      <label for="primaryContact"> primary Contact</label>
+      <input type="text" id="primaryContact" name="primaryContact">  
+
+      <label for="attendees"> attendees</label>
+      <input type="text" id="attendees" name="attendees">    
+
+      <label for="notes"> notes</label>
+      <input type="text" id="notes" name="notes">    
+
+      <label for="followUp"> follow Up</label>
+      <input type="text" id="followUp" name="followUp">    
+      
+      <button type="submit">Submit</button>
+    </form>
+    </p>
+  </body>
+</html>

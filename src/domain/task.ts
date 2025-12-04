@@ -1,10 +1,11 @@
+import { Status } from './enum';
 import { User } from './user';
 
 export class Task {
   constructor(
     public id: number,
     public description: string,
-    public status: string,
+    public status: Status,
     public assignedTo: User,
     public completeBy: Date | string,
     public visitReportId: number,
