@@ -14,6 +14,8 @@ async function bootstrap() {
   const partialsPath = join(__dirname, '..', 'src/views/partials');
   app.setViewEngine('hbs');
   hbs.registerPartials(partialsPath);
+  hbs.registerHelper('eq', (a, b) => a === b);
+
   await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

@@ -9,7 +9,6 @@
 </head>
   <body>
     {{> header}}
-    <p>
       <p>Hallo, {{user.username}}.</p>
       <h3>Today's Tasks</h3>
       <table title="Today's Tasks" class="table table-striped">
@@ -19,14 +18,22 @@
           <th>Status</th>
         </tr>
         {{#each tasks.today}}
-          <tr>
+        <tr>
             <td>{{completeBy}}</td>
             <td>{{description}}</td>
-            <td>{{status}}</td>
-          </tr>
+            <td>
+                <select name="status_{{id}}" task-id="{{id}}">
+                    {{#each ../statusOptions}}
+                        <option value="{{this}}" {{#if (eq ../status this)}}selected="selected"{{/if}}>{{this}}</option>
+                    {{/each}}
+                </select>
+            </td>
+        </tr>
         {{/each}}
       </table>
-    </p>
+ 
+
+
     <p>
       <h3>This week's Tasks</h3>
       <table title="This week's Tasks" class="table table-striped">
@@ -39,7 +46,13 @@
           <tr>
             <td>{{completeBy}}</td>
             <td>{{description}}</td>
-            <td>{{status}}</td>
+            <td>
+                <select name="status_{{id}}" task-id="{{id}}">
+                    {{#each ../statusOptions}}
+                        <option value="{{this}}" {{#if (eq ../status this)}}selected="selected"{{/if}}>{{this}}</option>
+                    {{/each}}
+                </select>
+            </td>
           </tr>
         {{/each}}
       </table>
@@ -56,7 +69,13 @@
           <tr>
             <td>{{completeBy}}</td>
             <td>{{description}}</td>
-            <td>{{status}}</td>
+            <td>
+                <select name="status_{{id}}" task-id="{{id}}">
+                    {{#each ../statusOptions}}
+                        <option value="{{this}}" {{#if (eq ../status this)}}selected="selected"{{/if}}>{{this}}</option>
+                    {{/each}}
+                </select>
+            </td>
           </tr>
         {{/each}}
       </table>

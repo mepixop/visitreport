@@ -58,6 +58,7 @@ insert into contact
 ("Bob", true, 2),
 ("Smitty", true, 3);
 
+--today or older
 insert into task
 (description, status, assignedTo, completeBy, visitReportId) 
 values
@@ -67,3 +68,26 @@ values
 ("Task 4", "Closed", 1, "2025-12-10 09:00:00", 3),
 ("Task 5", "Closed", 1, "2025-12-15 15:00:00", 2),
 ("Task 6", "InProgress", 1, "2025-11-20 14:00:00", 2);
+
+
+--future
+insert into task
+(description, status, assignedTo, completeBy, visitReportId) 
+values
+("Task 7", "Open", 1, "2026-10-04 16:00:00", 3),
+("Task 8", "Closed", 1, "2026-12-10 09:00:00", 3),
+("Task 9", "Closed", 1, "2026-12-15 15:00:00", 2),
+("Task 10", "InProgress", 1, "2026-11-20 14:00:00", 2),
+("Task 11", "Open", 1, "2026-30-04 16:00:00", 3),
+("Task 12", "Open", 1, "2026-02-04 16:00:00", 3);
+
+--this week
+insert into task
+(description, status, assignedTo, completeBy, visitReportId) 
+values
+("Task 7", "Open", 1, "2025-12-012 16:00:00", 3),
+("Task 8", "Closed", 1, "2025-12-10 09:00:00", 3),
+("Task 9", "Closed", 1, "2025-12-10 15:00:00", 2),
+("Task 10", "InProgress", 1, "2025-12-20 14:00:00", 2),
+("Task 11", "Open", 1, "2025-12-12 16:00:00", 3),
+("Task 12", "Open", 1, "2025-12-10 16:00:00", 3);
