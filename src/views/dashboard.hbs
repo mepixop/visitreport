@@ -7,23 +7,27 @@
     <title>Dashboard</title>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="../CSS/style.css" rel="stylesheet" >
 </head>
   <body>
     {{> header}}
-      <p>Hallo, {{user.username}}.</p>
+    <div class="main-content" >
+      <p class="greeting">Hallo, {{user.username}}.</p>
       <h3>Today's Tasks</h3>
-      <table title="Today's Tasks" class="table table-striped">
+      <table title="Today's Tasks" class="table table-striped spacer-table">
         <tr>
-          <th>Due Date</th>
+          <th class="date-td">Due Date</th>
           <th>Description</th>
+          <th>Visit Report ID</th>
           <th>Status</th>
         </tr>
         {{#each tasks.today}}
         <tr>
-            <td>{{completeBy}}</td>
+            <td class="date-td">{{completeBy}}</td>
             <td>{{description}}</td>
+            <td>{{visitReportId}}</td>
             <td>
-                <select name="status_{{id}}" task-id="{{id}}" visitReport-id="{{visitReportId}}">
+                <select class="form-select" name="status_{{id}}" task-id="{{id}}" visitReport-id="{{visitReportId}}">
                     {{#each ../statusOptions}}
                         <option value="{{this}}" {{#if (eq ../status this)}}selected="selected"{{/if}}>{{this}}</option>
                     {{/each}}
@@ -32,23 +36,21 @@
         </tr>
         {{/each}}
       </table>
- 
-
-
-    <p>
       <h3>This week's Tasks</h3>
-      <table title="This week's Tasks" class="table table-striped">
+      <table title="This week's Tasks" class="table table-striped spacer-table">
         <tr>
-          <th>Due Date</th>
+          <th class="date-td">Due Date</th>
           <th>Description</th>
+          <th>Visit Report ID</th>
           <th>Status</th>
         </tr>
         {{#each tasks.thisWeek}}
           <tr>
-            <td>{{completeBy}}</td>
+            <td class="date-td">{{completeBy}}</td>
             <td>{{description}}</td>
+            <td>{{visitReportId}}</td>
             <td>
-                <select name="status_{{id}}" task-id="{{id}}"  visitReport-id="{{visitReportId}}">
+                <select class="form-select" name="status_{{id}}" task-id="{{id}}"  visitReport-id="{{visitReportId}}">
                     {{#each ../statusOptions}}
                         <option value="{{this}}" {{#if (eq ../status this)}}selected="selected"{{/if}}>{{this}}</option>
                     {{/each}}
@@ -57,21 +59,21 @@
           </tr>
         {{/each}}
       </table>
-    </p>
-    <p>
       <h3>Future Tasks</h3>
-      <table title='Future Tasks' class="table table-striped">
+      <table title='Future Tasks' class="table table-striped spacer-table">
         <tr>
-          <th>Due Date</th>
+          <th class="date-td">Due Date</th>
           <th>Description</th>
+          <th>Visit Report ID</th>
           <th>Status</th>
         </tr>
         {{#each tasks.remaining }}
           <tr>
-            <td>{{completeBy}}</td>
+            <td class="date-td">{{completeBy}}</td>
             <td>{{description}}</td>
+            <td>{{visitReportId}}</td>
             <td>
-                <select name="status_{{id}}" task-id="{{id}}"  visitReport-id="{{visitReportId}}">
+                <select class="form-select" name="status_{{id}}" task-id="{{id}}"  visitReport-id="{{visitReportId}}">
                     {{#each ../statusOptions}}
                         <option value="{{this}}" {{#if (eq ../status this)}}selected="selected"{{/if}}>{{this}}</option>
                     {{/each}}
@@ -80,7 +82,8 @@
           </tr>
         {{/each}}
       </table>
-    </p>
+
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function(){
@@ -107,6 +110,23 @@
                     }
                 });
             });
+        });
+
+        document.querySelectorAll('select[name^="status_"]').forEach(select => {
+          function updateSelectClass() {
+
+            select.classList.forEach(cls => {
+              if (cls.startsWith("selected-status-")) {
+                select.classList.remove(cls);
+              }
+            });
+
+            const normalized = select.value.replace(/\s+/g, '-');
+            select.classList.add(`selected-status-${normalized}`);
+          }
+
+          updateSelectClass();
+          select.addEventListener('change', updateSelectClass);
         });
     </script>
   </body>

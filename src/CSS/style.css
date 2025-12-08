@@ -1,0 +1,30 @@
+.main-content {
+  padding: 10px 20px;
+}
+
+.greeting {
+  font-size: xx-large;
+  margin-bottom: 5vh;
+}
+
+.date-td {
+  width: fit-content;
+  min-width: max-content;
+  max-width: 50vh;
+}
+
+.spacer-table {
+  margin-bottom: 5vh;
+}
+
+.selected-status-InProgress {
+  background-color: #ffe9a6;
+}
+
+.selected-status-Open {
+  background-color: #c3f7c8;
+}
+
+.selected-status-Closed {
+  background-color: #f8c0c0;
+}

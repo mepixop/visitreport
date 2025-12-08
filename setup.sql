@@ -62,12 +62,12 @@ insert into contact
 insert into task
 (description, status, assignedTo, completeBy, visitReportId) 
 values
-("Task 1", "Open", 1, "2025-12-04 10:00:00", 1),
-("Task 2", "Open", 1, "2025-12-04 12:00:00", 2),
-("Task 3", "Open", 1, "2025-12-04 16:00:00", 3),
-("Task 4", "Closed", 1, "2025-12-10 09:00:00", 3),
-("Task 5", "Closed", 1, "2025-12-15 15:00:00", 2),
-("Task 6", "InProgress", 1, "2025-11-20 14:00:00", 2);
+("Task 24", "Open", 1, "2025-12-04 00:00:00", 1),
+("Task 23", "Open", 1, "2025-12-04 00:00:00", 2),
+("Task 323", "Open", 1, "2025-12-04 00:00:00", 3),
+("Task 21", "Open", 1, "2025-12-10 00:00:00", 3),
+("Task 123", "Open", 1, "2025-12-15 00:00:00", 2),
+("Task 122", "Open", 1, "2025-11-20 00:00:00", 2);
 
 
 --future

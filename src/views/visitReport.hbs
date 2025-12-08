@@ -1,8 +1,12 @@
-<!DOCTYPE html>
-<html>
-  <header>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  </header>
+<!DOCTYPE html>       
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Login</title>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+      <link href="../CSS/style.css" rel="stylesheet" >
+  </head>
   <body>
     <!-- <p>This is the Visit Reports page for {{user.username}}.</p> -->
         {{> header}}
@@ -19,8 +23,8 @@
               <th>Topic</th>
               <th>Status</th>
               <th>Type</th>
-              <th>Start</th>
-              <th>End</th>
+              <th class="date-td">Start</th>
+              <th class="date-td">End</th>
               <th>outcome</th>
               <th>primaryContact</th>
               <th>notes</th>
@@ -33,8 +37,8 @@
               <td>{{topic}}</td>
               <td>{{status}}</td>
               <td>{{type}}</td>
-              <td>{{startTime}}</td>
-              <td>{{endTime}}</td>
+              <td class="date-td">{{startTime}}</td>
+              <td class="date-td">{{endTime}}</td>
               <td>{{outcome}}</td>
               <td>{{primaryContact.name}}</td>
               <td>{{notes}}</td>
@@ -52,5 +56,6 @@
             {{/each}}
           </table>
         </p>
-  </body>
+
+    </body>
 </html>

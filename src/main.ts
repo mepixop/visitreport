@@ -12,6 +12,8 @@ async function bootstrap() {
   // app.useStaticAssets(join(__dirname, '..', 'src/public'));
   app.setBaseViewsDir(join(__dirname, '..', 'src/views'));
   const partialsPath = join(__dirname, '..', 'src/views/partials');
+  app.useStaticAssets(join(__dirname, '..', 'src'));
+
   app.setViewEngine('hbs');
   hbs.registerPartials(partialsPath);
   hbs.registerHelper('eq', (a, b) => a === b);
