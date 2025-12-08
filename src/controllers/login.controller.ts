@@ -18,7 +18,13 @@ export class LoginController {
 
   @Get()
   loginPage(@Req() req: Request, @Res() res: Response) {
-    res.render('login', {});
+    const user = req['loggedInUser'];
+    console.log(user);
+    if (user) {
+      res.redirect('/dashboard');
+    } else {
+      res.render('login', {});
+    }
   }
 
   @Post()
