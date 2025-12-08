@@ -5,6 +5,7 @@ import { User } from 'src/domain/user';
 import { getDbConnector } from 'src/models/dbConnector';
 import { TaskModel } from 'src/models/taskModel';
 import { UtilityService } from './utilityService';
+import { VisitReportModel } from 'src/models/visitReportModel';
 
 @Injectable()
 export class TaskService {
@@ -15,6 +16,7 @@ export class TaskService {
 
   private oneDay = 24 * 60 * 60 * 1000;
   private taskModel: TaskModel;
+  private visitReportModel: VisitReportModel;
 
   async _initialize() {
     if (!this.taskModel) {
@@ -52,11 +54,27 @@ export class TaskService {
     };
   }
 
-  async updateTaskStatus(taskId: string, newStatus: string) {
-    await this.taskModel.updateTaskById(taskId, newStatus);
+  async updateTaskStatus(
+    taskId: string,
+    newStatus: string,
+    visitReportId: string,
+  ) {
+    console.log(
+      'updateTaskStatus taskid: ',
+      taskId,
+      'status',
+      newStatus,
+      'VP',
+      visitReportId,
+    );
 
-    //call model to update the thing
-    //check status of assosiated visitreport
+    await this.taskModel.updateTaskById(taskId, newStatus);
+    console.log(visitReportId);
+    const reportDone = await this.taskModel.checkTasksByReport(visitReportId);
+
+    if (reportDone) {
+      this.visitReportModel.updateVisitReportStatusClosedByID(visitReportId);
+    }
   }
 
   readableTask(task: Task): Task {

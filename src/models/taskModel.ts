@@ -49,8 +49,21 @@ export class TaskModel {
   }
 
   async updateTaskById(taskId: string, newStatus: string) {
+    console.log('updateTaskById taskid: ', taskId, 'status', newStatus);
     const updateQuery = 'update task set status = ? where id = ?';
     await this.dbConnector.query(updateQuery, [newStatus, taskId]);
+  }
+
+  async checkTasksByReport(reportId: string): Promise<boolean> {
+    const [results]: any[] = await this.dbConnector.query(
+      'SELECT COUNT(*) as count FROM task WHERE visitReportId = ? AND status = ?',
+      [reportId, Status.Open],
+    );
+    if (results[0].count > 0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   toDomain(item: Object, user: User): Task {

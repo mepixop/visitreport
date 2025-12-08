@@ -23,7 +23,7 @@
             <td>{{completeBy}}</td>
             <td>{{description}}</td>
             <td>
-                <select name="status_{{id}}" task-id="{{id}}">
+                <select name="status_{{id}}" task-id="{{id}}" visitReport-id="{{visitReportId}}">
                     {{#each ../statusOptions}}
                         <option value="{{this}}" {{#if (eq ../status this)}}selected="selected"{{/if}}>{{this}}</option>
                     {{/each}}
@@ -48,7 +48,7 @@
             <td>{{completeBy}}</td>
             <td>{{description}}</td>
             <td>
-                <select name="status_{{id}}" task-id="{{id}}">
+                <select name="status_{{id}}" task-id="{{id}}"  visitReport-id="{{visitReportId}}">
                     {{#each ../statusOptions}}
                         <option value="{{this}}" {{#if (eq ../status this)}}selected="selected"{{/if}}>{{this}}</option>
                     {{/each}}
@@ -66,12 +66,12 @@
           <th>Description</th>
           <th>Status</th>
         </tr>
-        {{#each tasks.remaining}}
+        {{#each tasks.remaining }}
           <tr>
             <td>{{completeBy}}</td>
             <td>{{description}}</td>
             <td>
-                <select name="status_{{id}}" task-id="{{id}}">
+                <select name="status_{{id}}" task-id="{{id}}"  visitReport-id="{{visitReportId}}">
                     {{#each ../statusOptions}}
                         <option value="{{this}}" {{#if (eq ../status this)}}selected="selected"{{/if}}>{{this}}</option>
                     {{/each}}
@@ -88,6 +88,7 @@
 
                 var taskId = $(this).attr('task-id');
                 var newStatus = $(this).val();
+                var visitReportId = $(this).attr('visitReport-id');
 
                 $.ajax({
                     url:'/dashboard',
@@ -95,6 +96,7 @@
                     data:{
                         taskId : taskId,
                         newStatus : newStatus,
+                        visitReportId : visitReportId,
                     },
                     success: function(response){
                         if(response.error == true){

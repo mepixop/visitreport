@@ -33,13 +33,23 @@ export class DashboardController {
     @Res() res: Response,
     @Body('taskId') taskId: string,
     @Body('newStatus') newStatus: string,
+    @Body('visitReportId') visitReportId: string,
   ) {
-    await this.taskService.updateTaskStatus(taskId, newStatus);
+    console.log(
+      'dashbord taskid: ',
+      taskId,
+      'status',
+      newStatus,
+      'VP',
+      visitReportId,
+    );
+    await this.taskService.updateTaskStatus(taskId, newStatus, visitReportId);
 
     return res.json({
       message: 'update received for ',
       taskId,
       newStatus,
+      visitReportId,
     });
   }
 }
