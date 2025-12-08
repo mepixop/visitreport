@@ -22,13 +22,14 @@ export class TaskService {
     if (!this.taskModel) {
       const connector = await getDbConnector(this.configService);
       this.taskModel = new TaskModel(connector);
+      this.visitReportModel = new VisitReportModel(connector);
     }
   }
 
   async getTasksForDashboard(user: User) {
     await this._initialize();
 
-    const tasks = await this.taskModel.getActiveTasksForUser(user);
+    const tasks = await this.taskModel.getActiveOrFutureTasksForUser(user);
 
     const today = new Date();
     const oneWeek = new Date(today.getTime() + 7 * this.oneDay);
@@ -55,25 +56,23 @@ export class TaskService {
   }
 
   async updateTaskStatus(
-    taskId: string,
+    taskId: number,
     newStatus: string,
-    visitReportId: string,
+    visitReportId: number,
+    user: User,
   ) {
-    console.log(
-      'updateTaskStatus taskid: ',
-      taskId,
-      'status',
-      newStatus,
-      'VP',
-      visitReportId,
-    );
+    await this._initialize();
 
     await this.taskModel.updateTaskById(taskId, newStatus);
-    console.log(visitReportId);
-    const reportDone = await this.taskModel.checkTasksByReport(visitReportId);
+    const openTasks = await this.taskModel.getActiveTasksForVisitReport(
+      visitReportId,
+      user,
+    );
 
-    if (reportDone) {
-      this.visitReportModel.updateVisitReportStatusClosedByID(visitReportId);
+    console.log(openTasks);
+    console.log(openTasks.length);
+    if (openTasks.length == 0) {
+      await this.visitReportModel.closeVisitReport(visitReportId);
     }
   }
 

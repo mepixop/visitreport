@@ -42,8 +42,8 @@ export class VisitReportModel {
     return result['insertId'];
   }
 
-  async updateVisitReportStatusClosedByID(reportId: string) {
-    const updateQuery = 'update task set status = ? where id = ?';
+  async closeVisitReport(reportId: number) {
+    const updateQuery = 'update visitReport set status = ? where id = ?';
     await this.dbConnector.query(updateQuery, [Status.Closed, reportId]);
   }
 }

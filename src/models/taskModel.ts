@@ -16,6 +16,17 @@ export class TaskModel {
     return Object.values(results).map((item) => this.toDomain(item, user));
   }
 
+  async getActiveOrFutureTasksForUser(user: User) {
+    const query =
+      'select * from task where assignedTo = ? and (status != ? OR completeBy >= ?)';
+    const [results, _] = await this.dbConnector.query(query, [
+      user.id,
+      Status.Closed,
+      this.getToday(),
+    ]);
+    return Object.values(results).map((item) => this.toDomain(item, user));
+  }
+
   async getForVisitReport(id: number, user: User) {
     const [results, _] = await this.dbConnector.query(
       'select * from task where visitReportId = ?',
@@ -38,7 +49,25 @@ export class TaskModel {
     }
   }
 
-  getNextWeekMorning(): Date {
+  async updateTaskById(taskId: number, newStatus: string) {
+    const updateQuery = 'update task set status = ? where id = ?';
+    await this.dbConnector.query(updateQuery, [newStatus, taskId]);
+  }
+
+  async getActiveTasksForVisitReport(visitReportId: number, user: User) {
+    const [results, _] = await this.dbConnector.query(
+      'select * from task where visitReportId = ? and status != ?',
+      [visitReportId, Status.Closed],
+    );
+    return Object.values(results).map((item) => this.toDomain(item, user));
+  }
+
+  private getToday(): Date {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  }
+
+  private getNextWeekMorning(): Date {
     const nextWeek = new Date(new Date().getTime() + 7 * this.ONE_DAY);
     const nextWeekMorning = new Date(
       nextWeek.getFullYear(),
@@ -48,25 +77,7 @@ export class TaskModel {
     return nextWeekMorning;
   }
 
-  async updateTaskById(taskId: string, newStatus: string) {
-    console.log('updateTaskById taskid: ', taskId, 'status', newStatus);
-    const updateQuery = 'update task set status = ? where id = ?';
-    await this.dbConnector.query(updateQuery, [newStatus, taskId]);
-  }
-
-  async checkTasksByReport(reportId: string): Promise<boolean> {
-    const [results]: any[] = await this.dbConnector.query(
-      'SELECT COUNT(*) as count FROM task WHERE visitReportId = ? AND status = ?',
-      [reportId, Status.Open],
-    );
-    if (results[0].count > 0) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  toDomain(item: Object, user: User): Task {
+  private toDomain(item: Object, user: User): Task {
     return new Task(
       parseInt(item['id']),
       item['description'],

@@ -1,10 +1,8 @@
 import { Controller, Get, Post, Req, Res, Body } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import type { Response } from 'express';
+import type { Request, Response } from 'express';
 import { Status } from 'src/domain/enum';
 import { User } from 'src/domain/user';
-import { getDbConnector } from 'src/models/dbConnector';
-import { TaskModel } from 'src/models/taskModel';
 import { TaskService } from 'src/services/taskService';
 
 @Controller('dashboard')
@@ -28,22 +26,19 @@ export class DashboardController {
   }
 
   @Post()
-  async dashbord(
-    @Req() req: Request,
-    @Res() res: Response,
-    @Body('taskId') taskId: string,
-    @Body('newStatus') newStatus: string,
-    @Body('visitReportId') visitReportId: string,
-  ) {
-    console.log(
-      'dashbord taskid: ',
+  async dashbord(@Req() req: Request, @Res() res: Response) {
+    const user = req['loggedInUser'];
+
+    const taskId = parseInt(req.body['taskId']);
+    const newStatus = req.body['newStatus'];
+    const visitReportId = parseInt(req.body['visitReportId']);
+
+    await this.taskService.updateTaskStatus(
       taskId,
-      'status',
       newStatus,
-      'VP',
       visitReportId,
+      user,
     );
-    await this.taskService.updateTaskStatus(taskId, newStatus, visitReportId);
 
     return res.json({
       message: 'update received for ',
