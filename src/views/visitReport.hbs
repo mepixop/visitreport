@@ -9,27 +9,25 @@
   </head>
   <body>
     <!-- <p>This is the Visit Reports page for {{user.username}}.</p> -->
-        {{> header}}
-          <ul>
-            <li><a href="/visit-report/form">New Visit Report</a></li>
-          </ul>
-        </p>
-        <hr />
-        <p>
-          <h3>Visit Reports</h3>
+    {{> header}}
+    <div class="main-content" >
+          <nav class="navbar navbar-light">
+            <a class="btn btn-outline-success my-2 my-sm-0" href="/visit-report/form">New Visit Report</a>
+          </nav>
+          <h3 style="padding-top : 2vh">Visit Reports</h3>
           <table class="table table-striped">
             <tr>
-              <th>id</th>
+              <th>ID</th>
               <th>Topic</th>
               <th>Status</th>
               <th>Type</th>
               <th class="date-td">Start</th>
               <th class="date-td">End</th>
-              <th>outcome</th>
-              <th>primaryContact</th>
-              <th>notes</th>
-              <th>tasks</th>
-              <th>attendees</th>
+              <th>Outcome</th>
+              <th>Primary Contact</th>
+              <th>Notes</th>
+              <th>Tasks</th>
+              <th>Attendees</th>
             </tr>
             {{#each reports}}
             <tr>
@@ -42,7 +40,7 @@
               <td>{{outcome}}</td>
               <td>{{primaryContact.name}}</td>
               <td>{{notes}}</td>
-              <td>
+              <td class="task-list">
               {{#each tasks}}
                 <div>{{description}}</div>
               {{/each}}
@@ -55,7 +53,7 @@
             </tr>
             {{/each}}
           </table>
-        </p>
-
+ 
+      </div>
     </body>
 </html>

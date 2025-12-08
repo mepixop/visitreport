@@ -60,3 +60,9 @@
 .outcome-verypositive {
   background-color: #c3f798;
 }
+
+.task-list {
+  width: fit-content;
+  min-width: max-content;
+  max-width: 50vh;
+}
