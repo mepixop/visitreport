@@ -121,7 +121,7 @@
               }
             });
 
-            const normalized = select.value.replace(/\s+/g, '-');
+            const normalized = select.value.replace(/\s+/g, '-').toLowerCase();
             select.classList.add(`selected-status-${normalized}`);
           }
 

@@ -17,15 +17,15 @@
   margin-bottom: 5vh;
 }
 
-.selected-status-InProgress {
+.selected-status-inprogress {
   background-color: #ffe9a6;
 }
 
-.selected-status-Open {
+.selected-status-open {
   background-color: #f8c0c0;
 }
 
-.selected-status-Closed {
+.selected-status-closed {
   background-color: #c3f7c8;
 }
 .btn-sizeing {
@@ -49,7 +49,7 @@
   background-color: #f8c0c0;
 }
 
-.outcome-neutral {
+.outcome-normal {
   background-color: #ffe9a6;
 }
 

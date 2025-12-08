@@ -117,48 +117,40 @@
           attendees: $("#attendees").val()
         }
       }
-
-      const typeSelect = document.getElementById('type');
-      function updateTypeSelectClass() {
-        typeSelect.classList.remove('type-videocall', 'type-externalvisit', 'type-internalvisit', 'type-expo');
-
-        switch (typeSelect.value) {
-          case 'VideoCall':
-            typeSelect.classList.add('type-videocall');
-            break;
-          case 'ExternalVisit':
-            typeSelect.classList.add('type-externalvisit');
-            break;
-          case 'InternalVisit':
-            typeSelect.classList.add('type-internalvisit');
-            break;
-          case 'Expo':
-            typeSelect.classList.add('type-expo');
-            break;
+      
+      //Type Selection Colors
+      document.querySelectorAll('select[name="type"]').forEach(select => {
+        function updateSelectClass() {
+            select.classList.forEach(cls => {
+                if (cls.startsWith("type-")) {
+                    select.classList.remove(cls);
+                }
+            });
+            const normalized = select.value.replace(/\s+/g, '-').toLowerCase();
+            select.classList.add(`type-${normalized}`);
         }
-      }
-      updateTypeSelectClass();
-      typeSelect.addEventListener('change', updateTypeSelectClass);
-      const outcomeSelect = document.getElementById('outcome');
-      function updateOutcomeSelectClass(){
-        outcomeSelect.classList.remove('outcome-negative','outcome-positive','outcome-neutral','outcome-verypositive');
-        switch (outcomeSelect.value) {
-            case 'Negative':
-              outcomeSelect.classList.add('outcome-negative');
-              break;
-            case 'Normal':
-              outcomeSelect.classList.add('outcome-neutral');
-              break;
-            case 'Positive':
-              outcomeSelect.classList.add('outcome-positive');
-              break;
-            case 'VeryPositive':
-              outcomeSelect.classList.add('outcome-verypositive');
-              break;
-          }
+        updateSelectClass();
+        select.addEventListener('change', updateSelectClass);
+      });
+
+
+      //Outcome Selection Colors
+      document.querySelectorAll('select[name="outcome"]').forEach(select => {
+        function updateSelectClass() {
+            select.classList.forEach(cls => {
+                if (cls.startsWith("outcome-")) {
+                    select.classList.remove(cls);
+                }
+            });
+
+            const normalized = select.value.replace(/\s+/g, '-').toLowerCase();
+            select.classList.add(`outcome-${normalized}`);
         }
-      updateOutcomeSelectClass();
-      outcomeSelect.addEventListener('change', updateOutcomeSelectClass);
+
+        updateSelectClass();
+
+        select.addEventListener('change', updateSelectClass);
+      });
     </script>
   </body>
 </html>
