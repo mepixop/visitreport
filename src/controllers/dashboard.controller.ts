@@ -1,4 +1,4 @@
-import { Controller, Get, Req, Res } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, Body } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { Response } from 'express';
 import { Status } from 'src/domain/enum';
@@ -24,6 +24,22 @@ export class DashboardController {
       tasks: tasks,
       user: user,
       statusOptions: statusOptions,
+    });
+  }
+
+  @Post()
+  async dashbord(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Body('taskId') taskId: string,
+    @Body('newStatus') newStatus: string,
+  ) {
+    await this.taskService.updateTaskStatus(taskId, newStatus);
+
+    return res.json({
+      message: 'update received for ',
+      taskId,
+      newStatus,
     });
   }
 }

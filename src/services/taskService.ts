@@ -52,6 +52,13 @@ export class TaskService {
     };
   }
 
+  async updateTaskStatus(taskId: string, newStatus: string) {
+    await this.taskModel.updateTaskById(taskId, newStatus);
+
+    //call model to update the thing
+    //check status of assosiated visitreport
+  }
+
   readableTask(task: Task): Task {
     task.completeBy = this.utilityService.readableDate(task.completeBy as Date);
     return task;

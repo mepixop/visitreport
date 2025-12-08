@@ -48,6 +48,11 @@ export class TaskModel {
     return nextWeekMorning;
   }
 
+  async updateTaskById(taskId: string, newStatus: string) {
+    const updateQuery = 'update task set status = ? where id = ?';
+    await this.dbConnector.query(updateQuery, [newStatus, taskId]);
+  }
+
   toDomain(item: Object, user: User): Task {
     return new Task(
       parseInt(item['id']),
