@@ -10,56 +10,81 @@
   </head>
   <body>
     {{> header}}  
-    <h3>Visit Report</h3>
-    <form id="visitReportForm" method="post" action="/visit-report/form">
-      <br/>
-      <label for="topic">Topic</label>
-      <input type="text" id="topic" name="topic" maxlength="150">
-      <br/>
-      <label for="type">Type</label>
-      <select id="type" name ="type">
-        <option value="VideoCall">VideoCall</option>
-        <option value="ExternalVisit">ExternalVisit</option>
-        <option value="InternalVisit">InternalVisit</option>
-        <option value="Expo">Expo</option>
-      </select>
-      <br/>
+    <div class="main-content" >
+      <h3>Visit Report</h3>
+      <form id="visitReportForm" method="post" action="/visit-report/form">
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="topic">Topic</label>
+              <input type="text" id="topic" class="form-control" name="topic" maxlength="150">
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+              <label for="primaryContact">Primary Contact</label>
+              <input type="text" id="primaryContact"  class="form-control" name="primaryContact">  
+            </div>
+          </div>
+          <div class="w-100"></div>
+          <div class="col">
+            <div class="form-group">
+              <label for="type">Type</label>
+              <select id="type" class="form-control" name ="type">
+                <option value="VideoCall">VideoCall</option>
+                <option value="ExternalVisit">ExternalVisit</option>
+                <option value="InternalVisit">InternalVisit</option>
+                <option value="Expo">Expo</option>
+              </select>
+            </div>
+          </div>
+          <div class="col">
+            <div class="form-group">
+            <label for="attendees">Additional Contact</label>
+            <input type="text" id="attendees" class="form-control" name="attendees" placeholder="Marie Schmitt, Bob Vance">    
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="startTime">Start Time:</label>
+          <input type="datetime-local" id="startTime" class="form-control" name="startTime" placeholder="YYYY-MM-DD HH:mm:ss">
+        </div>
+          <div class="form-group">
+          <label for="endTime">End Time:</label>
+          <input type="datetime-local" id="endTime" class="form-control" name="endTime" placeholder="YYYY-MM-DD HH:mm:ss">
+        </div>
 
-      <label for="startTime">Start Time:</label>
-      <input type="datetime" id="startTime" name="startTime" placeholder="YYYY-MM-DD HH:mm:ss">
-      <br/>
-      <label for="endTime">End Time:</label>
-      <input type="datetime" id="endTime" name="endTime" placeholder="YYYY-MM-DD HH:mm:ss">
+        <div class="form-group">
+          <label for ="outcome">Outcome</label>
+          <select id="outcome" class="form-control" name ="outcome">
+            <option value="Negative">Negative</option>
+            <option value="Normal">Normal</option>
+            <option value="Positive">Positive</option>
+            <option value="VeryPositive">Very Positive</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="notes">Notes</label>
+          <textarea rows="5" id="notes" class="form-control" name="notes" maxlength="300">   </textarea>   
+        </div>
+        <div class="form-group">
+          <label for="followUp">Follow Up</label>
+          <textarea rows="5" id="followUp" class="form-control" name="followUp" maxlength="300"></textarea> 
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            No Tasks will can be created!
+          </div> 
+        </div>
+        
+        <div class="form-group" style="text-align: right;">
+          <button class="btn btn-danger btn-sizeing" type="">Cancel</button>
+          <button class="btn btn-success btn-sizeing" type="submit">Submit</button>
+        </div>
 
-      <br/>
-      <label for = "outcome">Outcome</label>
-      <select id="outcome" name ="outcome">
-        <option value="Negative">Negative</option>
-        <option value="Normal">Normal</option>
-        <option value="Positive">Positive</option>
-        <option value="VeryPositive">Very Positive</option>
-      </select>
+      </form>
+    </div>
 
-      <br/>
-      <label for="notes">Notes</label>
-      <input type="text" id="notes" name="notes" maxlength="300">    
-
-      <br/>
-      <label for="followUp">Follow Up</label>
-      <input type="text" id="followUp" name="followUp" maxlength="300">    
-
-      <br/>
-      <label for="primaryContact">Primary Contact</label>
-      <input type="text" id="primaryContact" name="primaryContact">  
-
-      <br/>
-      <label for="attendees">Additional Contact</label>
-      <input type="text" id="attendees" name="attendees" placeholder="Marie Schmitt, Bob Vance">    
-      
-      <br/>
-      <button type="submit">Submit</button>
-    </form>
-    </p>
     <script>
       $("#visitReportForm").on('submit', function(e){
         e.preventDefault();
@@ -77,13 +102,6 @@
             }
           }
         });
-        /*const submissionResponse = await fetch("/visit-report/form",{
-          method: "POST",
-          body: formData,
-          redirect:"manual"
-        });
-        const responseBody = await submissionResponse.json();
-        */
       });
 
       function getFormData(){
@@ -99,6 +117,48 @@
           attendees: $("#attendees").val()
         }
       }
+
+      const typeSelect = document.getElementById('type');
+      function updateTypeSelectClass() {
+        typeSelect.classList.remove('type-videocall', 'type-externalvisit', 'type-internalvisit', 'type-expo');
+
+        switch (typeSelect.value) {
+          case 'VideoCall':
+            typeSelect.classList.add('type-videocall');
+            break;
+          case 'ExternalVisit':
+            typeSelect.classList.add('type-externalvisit');
+            break;
+          case 'InternalVisit':
+            typeSelect.classList.add('type-internalvisit');
+            break;
+          case 'Expo':
+            typeSelect.classList.add('type-expo');
+            break;
+        }
+      }
+      updateTypeSelectClass();
+      typeSelect.addEventListener('change', updateTypeSelectClass);
+      const outcomeSelect = document.getElementById('outcome');
+      function updateOutcomeSelectClass(){
+        outcomeSelect.classList.remove('outcome-negative','outcome-positive','outcome-neutral','outcome-verypositive');
+        switch (outcomeSelect.value) {
+            case 'Negative':
+              outcomeSelect.classList.add('outcome-negative');
+              break;
+            case 'Normal':
+              outcomeSelect.classList.add('outcome-neutral');
+              break;
+            case 'Positive':
+              outcomeSelect.classList.add('outcome-positive');
+              break;
+            case 'VeryPositive':
+              outcomeSelect.classList.add('outcome-verypositive');
+              break;
+          }
+        }
+      updateOutcomeSelectClass();
+      outcomeSelect.addEventListener('change', updateOutcomeSelectClass);
     </script>
   </body>
 </html>

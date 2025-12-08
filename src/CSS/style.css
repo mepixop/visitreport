@@ -22,9 +22,41 @@
 }
 
 .selected-status-Open {
-  background-color: #c3f7c8;
+  background-color: #f8c0c0;
 }
 
 .selected-status-Closed {
+  background-color: #c3f7c8;
+}
+.btn-sizeing {
+  width: 100px;
+}
+
+.type-videocall {
+  background-color: #dbccff;
+}
+.type-externalvisit {
+  background-color: #edd4e9;
+}
+.type-internalvisit {
+  background-color: #fff3cd;
+}
+.type-expo {
+  background-color: #d7f8ee;
+}
+
+.outcome-negative {
   background-color: #f8c0c0;
+}
+
+.outcome-neutral {
+  background-color: #ffe9a6;
+}
+
+.outcome-positive {
+  background-color: #c3f7c8;
+}
+
+.outcome-verypositive {
+  background-color: #c3f798;
 }
