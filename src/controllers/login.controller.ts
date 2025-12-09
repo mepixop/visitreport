@@ -9,8 +9,8 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import type { Request, Response } from 'express';
-import { getDbConnector } from 'src/models/dbConnector';
-import { UserModel } from 'src/models/userModel';
+import { getDbConnector } from '../models/dbConnector';
+import { UserModel } from '../models/userModel';
 
 @Controller('login')
 export class LoginController {
@@ -19,7 +19,6 @@ export class LoginController {
   @Get()
   loginPage(@Req() req: Request, @Res() res: Response) {
     const user = req['loggedInUser'];
-    console.log(user);
     if (user) {
       res.redirect('/dashboard');
     } else {

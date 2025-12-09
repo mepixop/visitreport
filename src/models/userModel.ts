@@ -1,5 +1,5 @@
 import mysql from 'mysql2/promise';
-import { User } from 'src/domain/user';
+import { User } from '../domain/user';
 
 export class UserModel {
   constructor(private dbConnector: mysql.Connection) {}
