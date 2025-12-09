@@ -12,10 +12,19 @@ import type { Request, Response } from 'express';
 import { getDbConnector } from 'src/models/dbConnector';
 import { UserModel } from 'src/models/userModel';
 
+/**
+ * Controller for handling login-related requests.
+ */
 @Controller('login')
 export class LoginController {
   constructor(private configService: ConfigService) {}
 
+  /**
+   * Renders the login page if the user is not logged in,
+   * otherwise redirects to the dashboard.
+   * @param {Request} req The Express request object.
+   * @param {Response} res The Express response object.
+   */
   @Get()
   loginPage(@Req() req: Request, @Res() res: Response) {
     const user = req['loggedInUser'];
@@ -27,6 +36,12 @@ export class LoginController {
     }
   }
 
+  /**
+   * Handles user login. On successful login, it sets a cookie and
+   * redirects to the dashboard. On failure, it returns a 401 Unauthorized status.
+   * @param {Request} req The Express request object, containing username and password.
+   * @param {Response} res The Express response object.
+   */
   @Post()
   async doLogin(@Req() req: Request, @Res() res: Response) {
     const userModel = new UserModel(await getDbConnector(this.configService));
