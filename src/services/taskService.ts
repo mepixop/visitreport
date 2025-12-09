@@ -7,6 +7,9 @@ import { TaskModel } from 'src/models/taskModel';
 import { UtilityService } from './utilityService';
 import { VisitReportModel } from 'src/models/visitReportModel';
 
+/**
+ * Service for handling task-related operations.
+ */
 @Injectable()
 export class TaskService {
   constructor(
@@ -18,6 +21,11 @@ export class TaskService {
   private taskModel: TaskModel;
   private visitReportModel: VisitReportModel;
 
+  /**
+   * Initializes the service by creating model instances if they don't exist.
+   * This is a private helper method to ensure database connectors are ready.
+   * @private
+   */
   async _initialize() {
     if (!this.taskModel) {
       const connector = await getDbConnector(this.configService);
@@ -26,6 +34,12 @@ export class TaskService {
     }
   }
 
+  /**
+   * Retrieves and categorizes tasks for the user's dashboard.
+   * Tasks are split into 'today', 'thisWeek', and 'remaining'.
+   * @param {User} user The user for whom to retrieve tasks.
+   * @returns {Promise<{today: Task[], thisWeek: Task[], remaining: Task[]}>} An object containing categorized tasks.
+   */
   async getTasksForDashboard(user: User) {
     await this._initialize();
 
@@ -55,6 +69,14 @@ export class TaskService {
     };
   }
 
+  /**
+   * Updates the status of a specific task.
+   * If updating the task resolves all open tasks for a visit report, the report is closed.
+   * @param {number} taskId The ID of the task to update.
+   * @param {string} newStatus The new status for the task.
+   * @param {number} visitReportId The ID of the associated visit report.
+   * @param {User} user The user performing the update.
+   */
   async updateTaskStatus(
     taskId: number,
     newStatus: string,
@@ -76,6 +98,11 @@ export class TaskService {
     }
   }
 
+  /**
+   * Converts the 'completeBy' date of a task to a readable format.
+   * @param {Task} task The task object to modify.
+   * @returns {Task} The task with a readable 'completeBy' date.
+   */
   readableTask(task: Task): Task {
     task.completeBy = this.utilityService.readableDate(task.completeBy as Date);
     return task;

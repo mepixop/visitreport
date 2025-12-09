@@ -11,6 +11,9 @@ import { Status } from 'src/domain/enum';
 import { Contact } from 'src/domain/contact';
 import { request } from 'http';
 
+/**
+ * Service for handling visit report-related operations.
+ */
 @Injectable()
 export class VisitReportService {
   constructor(
@@ -23,6 +26,11 @@ export class VisitReportService {
   private contactModel: ContactModel;
   private initialized: boolean = false;
 
+  /**
+   * Initializes the service by creating model instances if they don't exist.
+   * This is a private helper method to ensure database connectors are ready.
+   * @private
+   */
   async _initialize() {
     if (!this.initialized) {
       const connector = await getDbConnector(this.configService);
@@ -33,6 +41,11 @@ export class VisitReportService {
     }
   }
 
+  /**
+   * Retrieves visit reports for the dashboard, formatted for display.
+   * @param {User} user The user for whom to retrieve visit reports.
+   * @returns {Promise<VisitReport[]>} A promise that resolves to an array of visit reports.
+   */
   async getVisitReportsForDashboard(user: User) {
     await this._initialize();
     const reportItems = await this.visitReportModel.getForUser(user);
@@ -46,6 +59,12 @@ export class VisitReportService {
     return reports;
   }
 
+  /**
+   * Creates a new visit report from the request body.
+   * @param {any} requestBody The request body containing visit report data.
+   * @param {User} user The user creating the visit report.
+   * @returns {Promise<string[]>} A promise that resolves to an array of error messages, if any.
+   */
   async createVisitReport(requestBody, user): Promise<string[]> {
     await this._initialize();
     const [primaryContact, attendees] = this.extractContacts(requestBody);
@@ -74,6 +93,12 @@ export class VisitReportService {
     return [];
   }
 
+  /**
+   * Extracts primary and attendee contacts from the request body.
+   * @param {any} requestBody The request body containing contact data.
+   * @returns {[Contact, Contact[]]} A tuple containing the primary contact and an array of attendee contacts.
+   * @private
+   */
   private extractContacts(requestBody): [Contact, Contact[]] {
     var primaryContact = new Contact(
       -1,
@@ -91,10 +116,23 @@ export class VisitReportService {
     return [primaryContact, attendees];
   }
 
+  /**
+   * Extracts follow-up tasks from a comma-separated string.
+   * @param {string} followUpString The string of follow-up tasks.
+   * @returns {string[]} An array of task strings.
+   * @private
+   */
   private extractTasks(followUpString: string): string[] {
     return followUpString.split(',').map((i) => i.trim());
   }
 
+  /**
+   * Constructs a full VisitReport object from a database row.
+   * @param {any} item The database row item.
+   * @param {User} user The user associated with the report.
+   * @returns {Promise<VisitReport>} A promise that resolves to a VisitReport object.
+   * @private
+   */
   private async buildReport(item, user: User): Promise<VisitReport> {
     const contacts = await this.contactModel.getForVisitReport(item['id']);
 
@@ -118,6 +156,11 @@ export class VisitReportService {
     );
   }
 
+  /**
+   * Converts the start and end times of a report to a readable format.
+   * @param {VisitReport} report The visit report to modify.
+   * @returns {VisitReport} The visit report with readable dates.
+   */
   readableReport(report: VisitReport): VisitReport {
     report.startTime = this.utilityService.readableDate(
       report.startTime as Date,

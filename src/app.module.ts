@@ -11,6 +11,10 @@ import { TaskService } from './services/taskService';
 import { UtilityService } from './services/utilityService';
 import { VisitReportService } from './services/visitReportService';
 
+/**
+ * The main module of the application.
+ * It imports necessary modules, registers controllers and providers, and configures middleware.
+ */
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -27,6 +31,10 @@ import { VisitReportService } from './services/visitReportService';
   providers: [AppService, TaskService, UtilityService, VisitReportService],
 })
 export class AppModule implements NestModule {
+  /**
+   * Configures middleware for the application.
+   * @param {MiddlewareConsumer} consumer The middleware consumer to configure.
+   */
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(LoggedInUserOnly)
