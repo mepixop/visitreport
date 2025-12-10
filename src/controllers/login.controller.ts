@@ -19,7 +19,9 @@ export class LoginController {
   @Get()
   loginPage(@Req() req: Request, @Res() res: Response) {
     const user = req['loggedInUser'];
+    console.log(user);
     if (user) {
+      console.log('here');
       res.redirect('/dashboard');
     } else {
       res.render('login', {});
