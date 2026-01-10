@@ -5,6 +5,11 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'node:path';
 const hbs = require('hbs');
 
+/**
+ * The main entry point for the NestJS application.
+ * This function initializes the application, sets up middleware,
+ * configures the templating engine, and starts the server.
+ */
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 

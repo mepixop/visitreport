@@ -2,10 +2,18 @@ import { Controller, Get, Post, Req, Res } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { VisitReportService } from 'src/services/visitReportService';
 
+/**
+ * Controller for handling visit report related requests.
+ */
 @Controller('/visit-report')
 export class VisitReportController {
   constructor(private visitReportService: VisitReportService) {}
 
+  /**
+   * Renders the visit report dashboard page.
+   * @param {Request} req The express request object.
+   * @param {Response} res The express response object.
+   */
   @Get()
   async visitReportDashboard(@Req() req: Request, @Res() res: Response) {
     const user = req['loggedInUser'];
@@ -17,6 +25,11 @@ export class VisitReportController {
     });
   }
 
+  /**
+   * Renders the new visit report form.
+   * @param {Request} req The express request object.
+   * @param {Response} res The express response object.
+   */
   @Get('/form')
   newForm(@Req() req: Request, @Res() res: Response) {
     const user = req['loggedInUser'];
@@ -24,6 +37,12 @@ export class VisitReportController {
       user: user,
     });
   }
+
+  /**
+   * Handles the submission of the new visit report form.
+   * @param {Request} req The express request object.
+   * @param {Response} res The express response object.
+   */
   @Post('/form')
   async submitForm(@Req() req: Request, @Res() res: Response) {
     console.log(req.body);
